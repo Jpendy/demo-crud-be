@@ -5,9 +5,13 @@ const app = express();
 const PORT = process.env.PORT;
 // GET POST PUT PATCH DELETE
 
-app.get('/', async (req, res) => {
+app.use(require('cors')());
 
-    res.send('hello world')
+app.get('/plants', async (req, res) => {
+
+    const queryResult = await client.query('SELECT * FROM plants;')
+    const rows = queryResult.rows;
+    res.send(rows)
 
 })
 
