@@ -31,5 +31,16 @@ app.post('/plants', async (req, res) => {
     res.send(queryResult.rows)
 })
 
+app.delete('/plants/:id', async (req, res) => {
+
+    const queryResult = await client.query(`
+        DELETE FROM plants 
+        WHERE id = $1
+        RETURNING *;
+    `, [req.params.id])
+
+    res.send(queryResult.rows)
+})
+
 
 app.listen(PORT, () => { console.log(`Server is listening on port ${PORT}`) })
